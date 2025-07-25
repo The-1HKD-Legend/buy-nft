@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NFT 證書與參與者 | The $1 Legend 一蚊傳奇</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #3f0071, #ffd700);
+      color: white;
+      padding: 0;
+    }
+    nav {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 28px;
+      color: #ffcc00;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+      text-align: center;
+    }
+    section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .nft-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding-top: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .nft-grid img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .participants {
+      max-width: 800px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+    .participant {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      justify-content: center;
+    }
+    .participant img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .join-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #ffcc00;
+      color: #3f0071;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+    .join-button:hover {
+      background-color: #ffe066;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home 首頁</a>
+    <a href="about.html">About 關於</a>
+    <a href="nft.html">NFT 證書與參與者</a>
+    <a href="faq.html">FAQ 常見問題</a>
+    <a href="buy.html">Join 參與</a>
+    <a href="contact.html">Contact 聯絡</a>
+  </nav>
+
+  <header>
+    <h1>NFT Certificates</h1>
+    <h2>可選擇嘅 NFT 證書</h2>
+    <p>選擇你最鍾意嘅證書設計，一齊參與呢場全球運動。<br>你捐贈之後，將會收到以下其中一款 NFT 證書作為象徵。</p>
+  </header>
+
+  <section class="nft-grid">
+    <img src="images/NFT1.jpeg" alt="NFT Design 1">
+    <img src="images/NFT2.jpeg" alt="NFT Design 2">
+    <img src="images/NFT3.jpeg" alt="NFT Design 3">
+    <img src="images/NFT4.jpeg" alt="NFT Design 4">
+  </section>
+
+  <section class="participants">
+    <h2>Participants 名冊</h2>
+    <p>以下係部分自願公開名嘅傳奇參與者：</p>
+    <div class="participant">
+      <img src="images/sample_fb_icon1.jpg" alt="User Icon">
+      <span>Jason Chan</span>
+    </div>
+    <div class="participant">
+      <img src="images/sample_fb_icon2.jpg" alt="User Icon">
+      <span>Emily Wong</span>
+    </div>
+    <!-- 可以繼續加更多參與者資料 -->
+  </section>
+
+  <footer>
+    &copy; 2025 The $1 Legend. All rights reserved.
+  </footer>
+
+  <a href="buy.html" class="join-button">Join Now / 立即參與</a>
+
+</body>
+</html>

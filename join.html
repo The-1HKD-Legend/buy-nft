@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Join 參與 | The $1 Legend 一蚊傳奇</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #3f0071, #ffd700);
+      color: white;
+      padding: 0;
+    }
+    nav {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 28px;
+      color: #ffcc00;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .checkbox {
+      margin-top: 20px;
+    }
+    .checkbox label {
+      font-size: 16px;
+      display: inline-block;
+    }
+    .pay-button {
+      display: block;
+      margin: 30px auto 0 auto;
+      background-color: #ffcc00;
+      color: #3f0071;
+      font-weight: bold;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .pay-button:hover {
+      background-color: #ffe066;
+    }
+    .join-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #ffcc00;
+      color: #3f0071;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+    .join-button:hover {
+      background-color: #ffe066;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home 首頁</a>
+    <a href="about.html">About 關於</a>
+    <a href="nft.html">NFT 證書與參與者</a>
+    <a href="faq.html">FAQ 常見問題</a>
+    <a href="join.html">Join 參與</a>
+    <a href="contact.html">Contact 聯絡</a>
+  </nav>
+
+  <header>
+    <h1>Join</h1>
+    <h2>參與「一蚊傳奇」，創造歷史<br>Join "$1 Legend" and Create History</h2>
+  </header>
+
+  <section>
+    <p>你只需要一蚊，就可以參與一場全球史上最大規模嘅信念運動。<br>
+    With just $1, you can join the largest belief-driven movement in human history.</p>
+
+    <p>每位參與者都會獲得一張獨一無二嘅 <strong>區塊鏈 NFT 證書</strong>，證明你嘅存在與行動。<br>
+    Every participant will receive a unique <strong>blockchain NFT certificate</strong>, proving your presence and action.</p>
+
+    <p>呢張 NFT 會記錄你嘅參與編號（例如 #0000012），並公開展示喺名冊之中（可選匿名）。<br>
+    This NFT will record your participation number (e.g., #0000012) and be displayed publicly (anonymity optional).</p>
+
+    <p>無需權力、無需財富，只有行動 —— 你就係傳奇。<br>
+    No power, no wealth needed — only your action. You are the legend.</p>
+
+    <div class="checkbox">
+      <input type="checkbox" id="anonymous" name="anonymous">
+      <label for="anonymous">我想匿名參與 I prefer to join anonymously</label>
+    </div>
+
+    <!-- ⚠️ 付款整合區：Stripe / Google Pay / Apple Pay 可接駁 -->
+    <button class="pay-button">以 $1 加入 Join with $1</button>
+  </section>
+
+  <footer>
+    &copy; 2025 The $1 Legend. All rights reserved.
+  </footer>
+
+  <a href="join.html" class="join-button">Join Now / 立即參與</a>
+
+</body>
+</html>
