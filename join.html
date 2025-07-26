@@ -62,15 +62,13 @@
       font-size: 18px;
       cursor: pointer;
     }
-    .custom-name-input {
-      margin-top: 10px;
-    }
-    .custom-name-input input {
+    .identity-option input[type="text"] {
       padding: 10px;
-      width: 250px;
-      font-size: 16px;
+      margin-top: 10px;
       border-radius: 8px;
       border: none;
+      font-size: 16px;
+      width: 280px;
     }
     .email-input input {
       padding: 12px;
@@ -118,23 +116,19 @@
   <div class="nft-selection">
     <h2>Step 1: Select Your NFT Certificate 選擇你的 NFT 證書</h2>
     <div class="nft-grid">
-      <img src="images/nft1.jpeg" alt="NFT 1" data-id="nft1">
-      <img src="images/nft2.jpeg" alt="NFT 2" data-id="nft2">
-      <img src="images/nft3.jpeg" alt="NFT 3" data-id="nft3">
-      <img src="images/nft4.jpeg" alt="NFT 4" data-id="nft4">
+      <img src="images/nft1.jpeg" alt="NFT 1" data-id="nft1.jpeg">
+      <img src="images/nft2.jpeg" alt="NFT 2" data-id="nft2.jpeg">
+      <img src="images/nft3.jpeg" alt="NFT 3" data-id="nft3.jpeg">
+      <img src="images/nft4.jpeg" alt="NFT 4" data-id="nft4.jpeg">
     </div>
   </div>
 
   <div class="identity-option">
     <h2>Step 2: Choose Identity Option 選擇身份顯示方式</h2>
-    <label>
-      <input type="radio" name="identity" value="anonymous" checked> 匿名 Anonymous
-    </label>
-    <label>
-      <input type="radio" name="identity" value="custom"> 自訂名稱 / Custom Name
-    </label>
-    <div class="custom-name-input" id="customNameField" style="display: none;">
-      <input type="text" id="customNameInput" placeholder="輸入你的名稱 / Enter your name">
+    <label><input type="radio" name="identity" value="anonymous" checked onclick="toggleNameInput()"> 匿名顯示 / Anonymous</label>
+    <label><input type="radio" name="identity" value="custom" onclick="toggleNameInput()"> 自訂名稱 / Custom Name</label>
+    <div id="customNameInput" style="display:none;">
+      <input type="text" id="customName" placeholder="請輸入你的名稱 / Enter your name">
     </div>
   </div>
 
@@ -160,18 +154,15 @@
       });
     });
 
-    // 顯示/隱藏 custom name 輸入框
-    document.querySelectorAll('input[name="identity"]').forEach(radio => {
-      radio.addEventListener("change", () => {
-        const isCustom = document.querySelector('input[name="identity"]:checked').value === 'custom';
-        document.getElementById("customNameField").style.display = isCustom ? 'block' : 'none';
-      });
-    });
+    function toggleNameInput() {
+      const identity = document.querySelector('input[name="identity"]:checked').value;
+      document.getElementById('customNameInput').style.display = (identity === 'custom') ? 'block' : 'none';
+    }
 
     async function startCheckout() {
       const identity = document.querySelector('input[name="identity"]:checked').value;
-      const customName = document.getElementById("customNameInput").value.trim();
       const email = document.getElementById("emailInput").value.trim();
+      const customName = (identity === "custom") ? document.getElementById("customName").value.trim() : "";
 
       if (!selectedNFT) {
         alert("請先選擇一張 NFT 圖案 / Please select an NFT image.");
@@ -183,8 +174,8 @@
         return;
       }
 
-      if (identity === 'custom' && !customName) {
-        alert("請輸入自訂名稱 / Please enter your custom name.");
+      if (identity === "custom" && customName === "") {
+        alert("請輸入你想公開顯示的名稱 / Please enter your custom name.");
         return;
       }
 
@@ -195,7 +186,7 @@
           body: JSON.stringify({
             nftDesign: selectedNFT,
             showIdentity: identity,
-            customName: identity === 'custom' ? customName : '',
+            customName: customName,
             email: email
           })
         });
@@ -215,5 +206,6 @@
       }
     }
   </script>
+
 </body>
 </html>
