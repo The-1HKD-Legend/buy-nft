@@ -47,7 +47,6 @@
       padding: 40px 20px;
       text-align: center;
     }
-
     .nft-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -55,7 +54,6 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-
     .nft-card {
       background-color: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
@@ -63,24 +61,20 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       text-align: center;
     }
-
     .nft-card img {
       width: 100%;
       border-radius: 10px;
       object-fit: contain;
     }
-
     .nft-number {
       margin-top: 10px;
       font-weight: bold;
       font-size: 18px;
       color: #fff;
     }
-
     .identity {
       margin-top: 10px;
     }
-
     .identity img {
       width: 50px;
       height: 50px;
@@ -88,12 +82,10 @@
       object-fit: cover;
       margin-bottom: 5px;
     }
-
     .identity-name {
       font-size: 16px;
       font-weight: 600;
     }
-
     .join-button {
       position: fixed;
       bottom: 30px;
@@ -107,11 +99,9 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       z-index: 999;
     }
-
     .join-button:hover {
       background-color: #ffe066;
     }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -120,81 +110,80 @@
     }
   </style>
 
-  <!-- ✅ Firebase SDK -->
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <!-- ✅ Firebase SDK - Compat 版本 -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCOh0XxfMx5lMwl2wN2TB3aHYWbUjX8udw",
-    authDomain: "the-1-legend.firebaseapp.com",
-    projectId: "the-1-legend",
-    storageBucket: "the-1-legend.appspot.com",
-    messagingSenderId: "832432450725",
-    appId: "1:832432450725:web:baf5301676a8f9e140b14c"
-  };
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOh0XxfMx5lMwl2wN2TB3aHYWbUjX8udw",
+      authDomain: "the-1-legend.firebaseapp.com",
+      projectId: "the-1-legend",
+      storageBucket: "the-1-legend.appspot.com",
+      messagingSenderId: "832432450725",
+      appId: "1:832432450725:web:baf5301676a8f9e140b14c"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-  async function loadNFTs() {
-    const container = document.getElementById('nftContainer');
-    const snapshot = await getDocs(collection(db, 'pendingSubscriptions'));
+    async function loadNFTs() {
+      const container = document.getElementById('nftContainer');
+      const snapshot = await db.collection('pendingSubscriptions').get();
 
-    let index = 1;
+      let index = 1;
 
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const nftDesign = data.nftDesign || 'nft1';
-      const showIdentity = data.showIdentity || 'anonymous';
-      const facebookName = data.facebookName || '';
-      const facebookPhotoUrl = data.facebookPhotoUrl || '';
-      const nftNumber = '#' + String(index).padStart(7, '0');
-      index++;
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const nftDesign = data.nftDesign || 'nft1';
+        const showIdentity = data.showIdentity || 'anonymous';
+        const facebookName = data.facebookName || '';
+        const facebookPhotoUrl = data.facebookPhotoUrl || '';
+        const nftNumber = '#' + String(index).padStart(7, '0');
+        index++;
 
-      const card = document.createElement('div');
-      card.className = 'nft-card';
+        const card = document.createElement('div');
+        card.className = 'nft-card';
 
-      const img = document.createElement('img');
-      img.src = `images/${nftDesign}.jpeg`;
-      img.alt = `NFT ${nftNumber}`;
+        const img = document.createElement('img');
+        img.src = `images/${nftDesign}.jpeg`;
+        img.alt = `NFT ${nftNumber}`;
 
-      const number = document.createElement('div');
-      number.className = 'nft-number';
-      number.textContent = nftNumber;
+        const number = document.createElement('div');
+        number.className = 'nft-number';
+        number.textContent = nftNumber;
 
-      const identity = document.createElement('div');
-      identity.className = 'identity';
+        const identity = document.createElement('div');
+        identity.className = 'identity';
 
-      if (showIdentity === "public" && facebookPhotoUrl && facebookName) {
-        const fbImg = document.createElement('img');
-        fbImg.src = facebookPhotoUrl;
-        fbImg.alt = facebookName;
-        identity.appendChild(fbImg);
+        if (showIdentity === "public" && facebookPhotoUrl && facebookName) {
+          const fbImg = document.createElement('img');
+          fbImg.src = facebookPhotoUrl;
+          fbImg.alt = facebookName;
+          identity.appendChild(fbImg);
 
-        const name = document.createElement('div');
-        name.className = 'identity-name';
-        name.textContent = facebookName;
-        identity.appendChild(name);
-      } else {
-        const anon = document.createElement('div');
-        anon.className = 'identity-name';
-        anon.textContent = '匿名 Anonymous';
-        identity.appendChild(anon);
-      }
+          const name = document.createElement('div');
+          name.className = 'identity-name';
+          name.textContent = facebookName;
+          identity.appendChild(name);
+        } else {
+          const anon = document.createElement('div');
+          anon.className = 'identity-name';
+          anon.textContent = '匿名 Anonymous';
+          identity.appendChild(anon);
+        }
 
-      card.appendChild(img);
-      card.appendChild(number);
-      card.appendChild(identity);
-      container.appendChild(card);
-    });
-  }
+        card.appendChild(img);
+        card.appendChild(number);
+        card.appendChild(identity);
+        container.appendChild(card);
+      });
+    }
 
-  window.addEventListener('DOMContentLoaded', loadNFTs);
-</script>
+    window.addEventListener('DOMContentLoaded', loadNFTs);
+  </script>
 </head>
 <body>
-
   <nav>
     <a href="index.html">Home 首頁</a>
     <a href="about.html">About 關於</a>
