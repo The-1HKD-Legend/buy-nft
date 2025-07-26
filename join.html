@@ -180,8 +180,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nftDesign: selectedNFT,
-          showIdentity: identity === "public",
+          nftDesign: selectedDesign,
+          showIdentity: selectedIdentity,
           email: email
         })
       });
