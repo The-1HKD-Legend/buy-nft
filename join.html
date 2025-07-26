@@ -176,7 +176,7 @@
         return;
       }
 
-      const res = await fetch("https://us-central1-the-1-legend.cloudfunctions.net/createCheckoutSession", {
+      const response = await fetch("https://createcheckoutsession-sheczpjfta-uc.a.run.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
