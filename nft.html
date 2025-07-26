@@ -73,6 +73,7 @@
       gap: 10px;
       margin-bottom: 10px;
       justify-content: center;
+      flex-wrap: wrap;
     }
     .participant img {
       width: 40px;
@@ -102,6 +103,71 @@
       opacity: 0.7;
     }
   </style>
+
+  <!-- ✅ Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOh0XxfMx5lMwl2wN2TB3aHYWbUjX8udw",
+      authDomain: "the-1-legend.firebaseapp.com",
+      projectId: "the-1-legend",
+      storageBucket: "the-1-legend.appspot.com",
+      messagingSenderId: "832432450725",
+      appId: "1:832432450725:web:baf5301676a8f9e140b14c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadParticipants() {
+      const container = document.getElementById('participantsList');
+      const snapshot = await getDocs(collection(db, 'pendingSubscriptions'));
+
+      let index = 1;
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const nftDesign = data.nftDesign || 'NFT1'; // fallback
+        const showIdentity = data.showIdentity;
+        const fbName = data.fbName;
+        const fbIcon = data.fbIcon;
+
+        const nftNumber = '#' + String(index).padStart(7, '0');
+        index++;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'participant';
+
+        // NFT Image
+        const nftImage = document.createElement('img');
+        nftImage.src = images/${nftDesign}.jpeg;
+        nftImage.alt = nftDesign;
+        nftImage.style.width = '60px';
+        nftImage.style.borderRadius = '10px';
+
+        // Identity Icon
+        if (showIdentity === 'public' && fbIcon) {
+          const iconImg = document.createElement('img');
+          iconImg.src = fbIcon;
+          iconImg.alt = 'Facebook Icon';
+          wrapper.appendChild(iconImg);
+        }
+
+        // Name Text
+        const textSpan = document.createElement('span');
+        textSpan.textContent = (showIdentity === 'public' && fbName)
+          ? ${nftNumber} - ${fbName}
+          : ${nftNumber} - Anonymous;
+
+        wrapper.appendChild(nftImage);
+        wrapper.appendChild(textSpan);
+        container.appendChild(wrapper);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadParticipants);
+  </script>
 </head>
 <body>
 
@@ -130,15 +196,7 @@
   <section class="participants">
     <h2>Participants 名冊</h2>
     <p>以下係部分自願公開名嘅傳奇參與者：</p>
-    <div class="participant">
-      <img src="images/sample_fb_icon1.jpg" alt="User Icon">
-      <span>Jason Chan</span>
-    </div>
-    <div class="participant">
-      <img src="images/sample_fb_icon2.jpg" alt="User Icon">
-      <span>Emily Wong</span>
-    </div>
-    <!-- 可以繼續加更多參與者資料 -->
+    <div id="participantsList"></div>
   </section>
 
   <footer>
