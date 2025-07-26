@@ -48,7 +48,6 @@
       text-align: center;
     }
 
-    /* NFT 展示 */
     .nft-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -126,7 +125,7 @@
       let index = 1;
       snapshot.forEach(doc => {
         const data = doc.data();
-        const nftDesign = data.nftDesign || 'nft1'; // fallback
+        const nftDesign = data.nftDesign || 'nft1'; // 預設為 nft1
         const nftNumber = '#' + String(index).padStart(7, '0');
         index++;
 
