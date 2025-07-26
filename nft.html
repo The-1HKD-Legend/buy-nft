@@ -9,7 +9,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #3f0071, #ffd700);
       color: white;
-      padding: 0;
     }
     nav {
       background-color: rgba(0, 0, 0, 0.3);
@@ -21,7 +20,6 @@
       text-decoration: none;
       margin: 0 15px;
       font-weight: bold;
-      font-size: 16px;
     }
     nav a:hover {
       text-decoration: underline;
@@ -49,37 +47,36 @@
       padding: 40px 20px;
       text-align: center;
     }
+
+    /* NFT 展示 */
     .nft-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      padding-top: 20px;
       max-width: 1000px;
       margin: 0 auto;
     }
-    .nft-grid img {
+    .nft-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .nft-card img {
       width: 100%;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      object-fit: contain;
     }
-    .participants {
-      max-width: 800px;
-      margin: 40px auto 0;
-      text-align: center;
+    .nft-number {
+      margin-top: 8px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
     }
-    .participant {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .participant img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
+
     .join-button {
       position: fixed;
       bottom: 30px;
@@ -96,6 +93,7 @@
     .join-button:hover {
       background-color: #ffe066;
     }
+
     footer {
       text-align: center;
       padding: 20px;
@@ -121,52 +119,35 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    async function loadParticipants() {
-      const container = document.getElementById('participantsList');
+    async function loadNFTs() {
+      const container = document.getElementById('nftContainer');
       const snapshot = await getDocs(collection(db, 'pendingSubscriptions'));
 
       let index = 1;
       snapshot.forEach(doc => {
         const data = doc.data();
-        const nftDesign = data.nftDesign || 'NFT1'; // fallback
-        const showIdentity = data.showIdentity;
-        const fbName = data.fbName;
-        const fbIcon = data.fbIcon;
-
+        const nftDesign = data.nftDesign || 'nft1'; // fallback
         const nftNumber = '#' + String(index).padStart(7, '0');
         index++;
 
-        const wrapper = document.createElement('div');
-        wrapper.className = 'participant';
+        const card = document.createElement('div');
+        card.className = 'nft-card';
 
-        // NFT Image
-        const nftImage = document.createElement('img');
-        nftImage.src = images/${nftDesign}.jpeg;
-        nftImage.alt = nftDesign;
-        nftImage.style.width = '60px';
-        nftImage.style.borderRadius = '10px';
+        const img = document.createElement('img');
+        img.src = images/${nftDesign}.jpeg;
+        img.alt = NFT ${nftNumber};
 
-        // Identity Icon
-        if (showIdentity === 'public' && fbIcon) {
-          const iconImg = document.createElement('img');
-          iconImg.src = fbIcon;
-          iconImg.alt = 'Facebook Icon';
-          wrapper.appendChild(iconImg);
-        }
+        const number = document.createElement('div');
+        number.className = 'nft-number';
+        number.textContent = nftNumber;
 
-        // Name Text
-        const textSpan = document.createElement('span');
-        textSpan.textContent = (showIdentity === 'public' && fbName)
-          ? ${nftNumber} - ${fbName}
-          : ${nftNumber} - Anonymous;
-
-        wrapper.appendChild(nftImage);
-        wrapper.appendChild(textSpan);
-        container.appendChild(wrapper);
+        card.appendChild(img);
+        card.appendChild(number);
+        container.appendChild(card);
       });
     }
 
-    window.addEventListener('DOMContentLoaded', loadParticipants);
+    window.addEventListener('DOMContentLoaded', loadNFTs);
   </script>
 </head>
 <body>
@@ -182,21 +163,12 @@
 
   <header>
     <h1>NFT Certificates</h1>
-    <h2>可選擇嘅 NFT 證書</h2>
-    <p>選擇你最鍾意嘅證書設計，一齊參與呢場全球運動。<br>你捐贈之後，將會收到以下其中一款 NFT 證書作為象徵。</p>
+    <h2>參與者專屬 NFT 證書</h2>
+    <p>以下係所有已捐贈者所獲得嘅 NFT 證書，每張都有獨立編號。</p>
   </header>
 
-  <section class="nft-grid">
-    <img src="images/NFT1.jpeg" alt="NFT Design 1">
-    <img src="images/NFT2.jpeg" alt="NFT Design 2">
-    <img src="images/NFT3.jpeg" alt="NFT Design 3">
-    <img src="images/NFT4.jpeg" alt="NFT Design 4">
-  </section>
-
-  <section class="participants">
-    <h2>Participants 名冊</h2>
-    <p>以下係部分自願公開名嘅傳奇參與者：</p>
-    <div id="participantsList"></div>
+  <section>
+    <div class="nft-grid" id="nftContainer"></div>
   </section>
 
   <footer>
@@ -204,6 +176,5 @@
   </footer>
 
   <a href="join.html" class="join-button">Join Now / 立即參與</a>
-
 </body>
 </html>
