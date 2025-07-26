@@ -56,19 +56,16 @@
     .nft-grid img.selected {
       border-color: #ffcc00;
     }
-    .identity-option label {
-      display: inline-block;
-      margin: 10px 20px;
+    .identity-option label, .identity-option input {
       font-size: 18px;
-      cursor: pointer;
     }
     .identity-option input[type="text"] {
-      padding: 10px;
       margin-top: 10px;
-      border-radius: 8px;
+      padding: 8px;
+      border-radius: 10px;
       border: none;
+      width: 300px;
       font-size: 16px;
-      width: 280px;
     }
     .email-input input {
       padding: 12px;
@@ -124,12 +121,8 @@
   </div>
 
   <div class="identity-option">
-    <h2>Step 2: Choose Identity Option 選擇身份顯示方式</h2>
-    <label><input type="radio" name="identity" value="anonymous" checked onclick="toggleNameInput()"> 匿名顯示 / Anonymous</label>
-    <label><input type="radio" name="identity" value="custom" onclick="toggleNameInput()"> 自訂名稱 / Custom Name</label>
-    <div id="customNameInput" style="display:none;">
-      <input type="text" id="customName" placeholder="請輸入你的名稱 / Enter your name">
-    </div>
+    <h2>Step 2: Enter Display Name 輸入你想顯示的名稱</h2>
+    <input type="text" id="customNameInput" placeholder="如不想顯示可輸入「匿名」">
   </div>
 
   <div class="email-input">
@@ -154,15 +147,9 @@
       });
     });
 
-    function toggleNameInput() {
-      const identity = document.querySelector('input[name="identity"]:checked').value;
-      document.getElementById('customNameInput').style.display = (identity === 'custom') ? 'block' : 'none';
-    }
-
     async function startCheckout() {
-      const identity = document.querySelector('input[name="identity"]:checked').value;
+      const customName = document.getElementById("customNameInput").value.trim();
       const email = document.getElementById("emailInput").value.trim();
-      const customName = (identity === "custom") ? document.getElementById("customName").value.trim() : "";
 
       if (!selectedNFT) {
         alert("請先選擇一張 NFT 圖案 / Please select an NFT image.");
@@ -174,19 +161,14 @@
         return;
       }
 
-      if (identity === "custom" && customName === "") {
-        alert("請輸入你想公開顯示的名稱 / Please enter your custom name.");
-        return;
-      }
-
       try {
         const response = await fetch("https://createcheckoutsession-sheczpjfta-uc.a.run.app", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             nftDesign: selectedNFT,
-            showIdentity: identity,
-            customName: customName,
+            showIdentity: "custom",
+            customName: customName || "匿名",
             email: email
           })
         });
@@ -206,6 +188,5 @@
       }
     }
   </script>
-
 </body>
 </html>
