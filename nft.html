@@ -122,76 +122,76 @@
 
   <!-- ✅ Firebase SDK -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCOh0XxfMx5lMwl2wN2TB3aHYWbUjX8udw",
-      authDomain: "the-1-legend.firebaseapp.com",
-      projectId: "the-1-legend",
-      storageBucket: "the-1-legend.appspot.com",
-      messagingSenderId: "832432450725",
-      appId: "1:832432450725:web:baf5301676a8f9e140b14c"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyCOh0XxfMx5lMwl2wN2TB3aHYWbUjX8udw",
+    authDomain: "the-1-legend.firebaseapp.com",
+    projectId: "the-1-legend",
+    storageBucket: "the-1-legend.appspot.com",
+    messagingSenderId: "832432450725",
+    appId: "1:832432450725:web:baf5301676a8f9e140b14c"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    async function loadNFTs() {
-      const container = document.getElementById('nftContainer');
-      const snapshot = await getDocs(collection(db, 'pendingSubscriptions'));
+  async function loadNFTs() {
+    const container = document.getElementById('nftContainer');
+    const snapshot = await getDocs(collection(db, 'pendingSubscriptions'));
 
-      let index = 1;
+    let index = 1;
 
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const nftDesign = data.nftDesign || 'nft1';
-        const showIdentity = data.showIdentity;
-        const facebookName = data.facebookName || '';
-        const facebookPhotoUrl = data.facebookPhotoUrl || '';
-        const nftNumber = '#' + String(index).padStart(7, '0');
-        index++;
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const nftDesign = data.nftDesign || 'nft1';
+      const showIdentity = data.showIdentity || 'anonymous';
+      const facebookName = data.facebookName || '';
+      const facebookPhotoUrl = data.facebookPhotoUrl || '';
+      const nftNumber = '#' + String(index).padStart(7, '0');
+      index++;
 
-        const card = document.createElement('div');
-        card.className = 'nft-card';
+      const card = document.createElement('div');
+      card.className = 'nft-card';
 
-        const img = document.createElement('img');
-        img.src = images/${nftDesign}.jpeg;
-        img.alt = NFT ${nftNumber};
+      const img = document.createElement('img');
+      img.src = "images/" + nftDesign + ".jpeg";
+      img.alt = NFT ${nftNumber};
 
-        const number = document.createElement('div');
-        number.className = 'nft-number';
-        number.textContent = nftNumber;
+      const number = document.createElement('div');
+      number.className = 'nft-number';
+      number.textContent = nftNumber;
 
-        const identity = document.createElement('div');
-        identity.className = 'identity';
+      const identity = document.createElement('div');
+      identity.className = 'identity';
 
-        if (showIdentity && facebookPhotoUrl && facebookName) {
-          const fbImg = document.createElement('img');
-          fbImg.src = facebookPhotoUrl;
-          fbImg.alt = facebookName;
-          identity.appendChild(fbImg);
+      if (showIdentity === "public" && facebookPhotoUrl && facebookName) {
+        const fbImg = document.createElement('img');
+        fbImg.src = facebookPhotoUrl;
+        fbImg.alt = facebookName;
+        identity.appendChild(fbImg);
 
-          const name = document.createElement('div');
-          name.className = 'identity-name';
-          name.textContent = facebookName;
-          identity.appendChild(name);
-        } else {
-          const anon = document.createElement('div');
-          anon.className = 'identity-name';
-          anon.textContent = '匿名 Anonymous';
-          identity.appendChild(anon);
-        }
+        const name = document.createElement('div');
+        name.className = 'identity-name';
+        name.textContent = facebookName;
+        identity.appendChild(name);
+      } else {
+        const anon = document.createElement('div');
+        anon.className = 'identity-name';
+        anon.textContent = '匿名 Anonymous';
+        identity.appendChild(anon);
+      }
 
-        card.appendChild(img);
-        card.appendChild(number);
-        card.appendChild(identity);
-        container.appendChild(card);
-      });
-    }
+      card.appendChild(img);
+      card.appendChild(number);
+      card.appendChild(identity);
+      container.appendChild(card);
+    });
+  }
 
-    window.addEventListener('DOMContentLoaded', loadNFTs);
-  </script>
+  window.addEventListener('DOMContentLoaded', loadNFTs);
+</script>
 </head>
 <body>
 
