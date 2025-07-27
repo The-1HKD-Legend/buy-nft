@@ -169,7 +169,7 @@
       }
 
       const showIdentity = anonymousChecked ? "anonymous" : "custom";
-      const customName = anonymousChecked ? "匿名" : (customNameInput || "匿名");
+      const customName = anonymousChecked ? undefined : customNameInput;
 
       try {
         const response = await fetch("https://createcheckoutsession-sheczpjfta-uc.a.run.app", {
