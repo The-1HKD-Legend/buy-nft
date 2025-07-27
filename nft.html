@@ -135,8 +135,9 @@
         card.className = 'nft-card';
 
         const img = document.createElement('img');
-        img.src = `images/${nftDesign}.jpeg`;
-        img.alt = `NFT ${nftNumber}`;
+        const imageFile = nftDesign.endsWith('.jpeg') ? nftDesign : ${nftDesign}.jpeg;
+        img.src = images/${imageFile};
+        img.alt = NFT ${nftNumber};
 
         const number = document.createElement('div');
         number.className = 'nft-number';
@@ -176,9 +177,9 @@
     <h1>NFT Certificates</h1>
     <h2>參與者專屬 NFT 證書</h2>
     <p>
-  以下係所有已捐贈者所獲得嘅 NFT 證書，每張都有獨立編號。如選擇自訂名稱，會顯示該名稱；否則顯示為匿名。<br>
-  Each NFT certificate below was earned by a donor. Every one is uniquely numbered. If a custom name was chosen, it will be displayed; otherwise, it shows as Anonymous.
-</p>
+      以下係所有已捐贈者所獲得嘅 NFT 證書，每張都有獨立編號。如選擇自訂名稱，會顯示該名稱；否則顯示為匿名。<br>
+      Each NFT certificate below was earned by a donor. Every one is uniquely numbered. If a custom name was chosen, it will be displayed; otherwise, it shows as Anonymous.
+    </p>
   </header>
 
   <section>
