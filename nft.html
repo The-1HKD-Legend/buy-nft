@@ -135,9 +135,9 @@
         card.className = 'nft-card';
 
         const img = document.createElement('img');
-        const imageFile = nftDesign.endsWith('.jpeg') ? nftDesign : ${nftDesign}.jpeg;
-        img.src = images/${imageFile};
-        img.alt = NFT ${nftNumber};
+        const imageFile = nftDesign.endsWith('.jpeg') ? nftDesign : '${nftDesign}.jpeg';
+        img.src = 'images/${imageFile}';
+        img.alt = 'NFT ${nftNumber}';
 
         const number = document.createElement('div');
         number.className = 'nft-number';
