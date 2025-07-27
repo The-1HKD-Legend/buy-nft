@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Join 立即參與 | The $1 Legend</title>
   <script src="https://js.stripe.com/v3/"></script>
   <style>
@@ -56,16 +56,21 @@
     .nft-grid img.selected {
       border-color: #ffcc00;
     }
-    .identity-option label, .identity-option input {
+    .identity-option label {
       font-size: 18px;
+      display: block;
+      margin-top: 10px;
     }
     .identity-option input[type="text"] {
-      margin-top: 10px;
       padding: 8px;
       border-radius: 10px;
       border: none;
       width: 300px;
       font-size: 16px;
+    }
+    .identity-option input[type="checkbox"] {
+      margin-top: 15px;
+      transform: scale(1.3);
     }
     .email-input input {
       padding: 12px;
@@ -121,8 +126,9 @@
   </div>
 
   <div class="identity-option">
-    <h2>Step 2: Enter Display Name 輸入你想顯示的名稱</h2>
-    <input type="text" id="customNameInput" placeholder="如不想顯示可輸入「匿名」">
+    <h2>Step 2: Choose Display Option 選擇顯示名稱方式</h2>
+    <input type="text" id="customNameInput" placeholder="你想顯示的名稱（可留空）">
+    <label><input type="checkbox" id="anonymousCheckbox"> 匿名 Anonymous</label>
   </div>
 
   <div class="email-input">
@@ -148,7 +154,8 @@
     });
 
     async function startCheckout() {
-      const customName = document.getElementById("customNameInput").value.trim();
+      const customNameInput = document.getElementById("customNameInput").value.trim();
+      const anonymousChecked = document.getElementById("anonymousCheckbox").checked;
       const email = document.getElementById("emailInput").value.trim();
 
       if (!selectedNFT) {
@@ -161,15 +168,18 @@
         return;
       }
 
+      const showIdentity = anonymousChecked ? "anonymous" : "custom";
+      const customName = anonymousChecked ? "匿名" : (customNameInput || "匿名");
+
       try {
         const response = await fetch("https://createcheckoutsession-sheczpjfta-uc.a.run.app", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             nftDesign: selectedNFT,
-            showIdentity: "custom",
-            customName: customName || "匿名",
-            email: email
+            showIdentity,
+            customName,
+            email
           })
         });
 
@@ -188,5 +198,6 @@
       }
     }
   </script>
+
 </body>
 </html>
